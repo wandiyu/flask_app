@@ -15,16 +15,16 @@
 	<nav class="navbar navbar-expand-sm bg-light">
 		<a class="navbar-brand" href="#">Ticker Lookup App</a>
 			<ul class = 'navbar-nav'>
-				<li class="nav-item"><a class="nav-link" href="#prediction">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="https://github.com/wandiyu/flask_app">Github</a></li>
 				<li class="nav-item"><a class="nav-link" href="https://www.thedataincubator.com/12day.html">12-day</a></li>
 			</ul>
 	</nav class="navbar">
    <section id = "prediction">
 	 <div class="container">
-      <form method = "get">
+      <form method="POST">
 		<label for="tname">Ticker symbol:</label>
-		<input type="text" id="tname" name="tname"><br>
+		<input type="text" id="tname" name="tname" placeholder="GOOG"><br>
 		<input type="checkbox" name="cprice" value="cprice">
 		<label for="cprice">Closing Price</label><br>
 		<input type="checkbox" name="acprice" value="acprice">
