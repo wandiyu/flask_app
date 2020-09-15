@@ -29,7 +29,7 @@ def index():
 
 @app.route('/graph')
 def graph():
-    tname = app.tname.pop(0)
+    tname = app.tname.pop(0).upper()
     ttype = app.type.pop(0)
     if ttype in ['cprice','oprice']:
         hres = urllib.request.urlopen('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='\
@@ -39,7 +39,7 @@ def graph():
                        +tname+'&apikey=817F9YH6KXOZQ2QU')
     data = json.loads(hres.read().decode("utf-8"))
     if 'Error Message' in data:
-        print ('Please check your ticker symbol')
+        return ('Please check your ticker symbol')
     else:
         a = pd.DataFrame(data['Time Series (Daily)']).T.iloc[:,:4]
     a.columns = ['open','high','low','close']
