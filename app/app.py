@@ -23,6 +23,7 @@ def index():
             return 'Please check one of the options' 
         else:
             app.vars['type'] = [i for i in ['cprice','acprice','oprice','aoprice'] if i in request.form][0]
+        
         return redirect('/graph')
 
 @app.route('/graph')
