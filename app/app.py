@@ -10,7 +10,7 @@ from bokeh.resources import INLINE
 app = Flask(__name__)
 app.vars = {}
 
-@app.route('/index',methods=['POST','GET'])
+@app.route('/',methods=['POST','GET'])
 def index():
     if request.method == 'GET':
         return render_template('index.html')
@@ -63,4 +63,4 @@ def graph():
     return render_template('showresult.html', filename=filename,**kwargs)   
     
 if __name__ == '__main__':
-    app.run(port=33507,debug=True)
+    app.run(debug=True)
