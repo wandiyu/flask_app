@@ -56,7 +56,6 @@ def graph():
     
     # grab the static resources
     script, div = components(p)
-    print (script, div)
     kwargs = {'script': script, 'div': div}
     kwargs['title'] = 'bokeh-with-flask'    
     filename = 'https://www.google.com/search?tbm=fin&q='+tname
