@@ -8,7 +8,8 @@ from bokeh.resources import INLINE
 
 
 app = Flask(__name__)
-app.vars = {}
+app.tname = []
+app.type = []
 
 @app.route('/',methods=['POST','GET'])
 def index():
@@ -18,18 +19,18 @@ def index():
         if 'tname' not in request.form:
             return 'please enter ticker symbol'
         else:
-            app.vars['tname']=request.form['tname']
+            app.tname.append(request.form['tname'])
         if len(request.form)!=2:
             return 'Please check one of the options' 
         else:
-            app.vars['type'] = [i for i in ['cprice','acprice','oprice','aoprice'] if i in request.form][0]
+            app.type.append([i for i in ['cprice','acprice','oprice','aoprice'] if i in request.form][0])
         
         return redirect('/graph')
 
 @app.route('/graph')
 def graph():
-    tname = app.vars['tname']
-    ttype = app.vars['type']
+    tname = app.tname.pop(0)
+    ttype = app.type.pop(0)
     if ttype in ['cprice','oprice']:
         hres = urllib.request.urlopen('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='\
                        +tname+'&apikey=817F9YH6KXOZQ2QU')
