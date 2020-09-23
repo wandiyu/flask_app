@@ -8,29 +8,22 @@ from bokeh.resources import INLINE
 
 
 app = Flask(__name__)
-app.tname = []
-app.type = []
 
-@app.route('/',methods=['POST','GET'])
+@app.route('/')
 def index():
-    if request.method == 'GET':
-        return render_template('index.html')
-    else:
-        if 'tname' not in request.form:
-            return 'please enter ticker symbol'
-        else:
-            app.tname.append(request.form['tname'])
-        if len(request.form)!=2:
-            return 'Please check one of the options' 
-        else:
-            app.type.append([i for i in ['cprice','acprice','oprice','aoprice'] if i in request.form][0])
-        
-        return redirect('/graph')
+	return render_template('index.html')
 
 @app.route('/graph')
 def graph():
-    tname = app.tname.pop(0).upper()
-    ttype = app.type.pop(0)
+    tname = request.args.get('tname','GOOG')
+    ttypes = {'cprice':0,'acprice':0,'oprice':0,'aoprice':0}
+    for t in ttypes:
+        if request.args.get(t,0):
+            ttypes[t] = 1
+            ttype = t
+    print (sum(ttypes.values()))
+    if sum(ttypes.values()) != 1:
+        return 'Please check one of the options' 
     if ttype in ['cprice','oprice']:
         hres = urllib.request.urlopen('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='\
                        +tname+'&apikey=817F9YH6KXOZQ2QU')
@@ -64,4 +57,4 @@ def graph():
     return render_template('showresult.html', filename=filename,**kwargs)   
     
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
